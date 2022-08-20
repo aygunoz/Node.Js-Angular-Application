@@ -1,13 +1,14 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
-import { Subscription } from 'rxjs';
+import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Subscription} from 'rxjs';
 
-import { Post } from "../post.model";
-import { PostsService } from "../posts.service";
+import {Post} from '../post.model';
+import {PostsService} from '../posts.service';
+import {PageEvent} from '@angular/material';
 
 @Component({
-  selector: "app-post-list",
-  templateUrl: "./post-list.component.html",
-  styleUrls: ["./post-list.component.css"]
+  selector: 'app-post-list',
+  templateUrl: './post-list.component.html',
+  styleUrls: ['./post-list.component.css']
 })
 export class PostListComponent implements OnInit, OnDestroy {
   // posts = [
@@ -16,9 +17,13 @@ export class PostListComponent implements OnInit, OnDestroy {
   //   { title: "Third Post", content: "This is the third post's content" }
   // ];
   posts: Post[] = [];
+  totalPost = 10;
+  postsPerPage = 2;
+  pageSizeOptions = [1, 2, 5, 10];
   private postsSub: Subscription;
 
-  constructor(public postsService: PostsService) {}
+  constructor(public postsService: PostsService) {
+  }
 
   ngOnInit() {
     this.postsService.getPosts();
@@ -35,5 +40,9 @@ export class PostListComponent implements OnInit, OnDestroy {
 
   onDelete(post: string) {
     this.postsService.deletePost(post);
+  }
+
+  onChangePage(pageData: PageEvent) {
+    console.log(pageData);
   }
 }

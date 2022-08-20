@@ -7,8 +7,8 @@ import {
   MatCardModule,
   MatButtonModule,
   MatToolbarModule,
-  MatExpansionModule
-} from "@angular/material";
+  MatExpansionModule, MatPaginatorModule
+} from '@angular/material';
 
 import { AppComponent } from "./app.component";
 import { PostCreateComponent } from "./posts/post-create/post-create.component";
@@ -24,19 +24,20 @@ import {AppRoutingModule} from './app-routing.module';
     HeaderComponent,
     PostListComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    FormsModule,
-    ReactiveFormsModule,
-    BrowserAnimationsModule,
-    MatInputModule,
-    MatCardModule,
-    MatButtonModule,
-    MatToolbarModule,
-    MatExpansionModule,
-    HttpClientModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        FormsModule,
+        ReactiveFormsModule,
+        BrowserAnimationsModule,
+        MatInputModule,
+        MatCardModule,
+        MatButtonModule,
+        MatToolbarModule,
+        MatExpansionModule,
+        HttpClientModule,
+        MatPaginatorModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })
