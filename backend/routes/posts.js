@@ -36,19 +36,26 @@ router.post('', multer({storage}).single('image'), (req, res, next) => {
       message: 'Post added successfully',
       post: {
         ...createdPost,
-        id: createdPost._id}
+        id: createdPost._id
+      }
     });
   })
 });
 
-router.put('/:id', (req, res, next) => {
+router.put('/:id', multer({storage}).single('image'), (req, res, next) => {
+  let imagePath = req.body.imagePath;
+  if (req.file) {
+    const url = req.protocol + '://' + req.get('host');
+    imagePath = url + '/images/' + req.file.filename;
+  }
   const post = new Post({
     _id: req.body.id,
     title: req.body.title,
     content: req.body.content,
-  })
+    imagePath: imagePath,
+  });
+  console.log(req.body);
   Post.updateOne({_id: req.params.id}, post).then(result => {
-    console.log(result);
     res.status(200).json({message: 'Update succesfully'});
   })
 });
@@ -63,7 +70,7 @@ router.get('', (req, res, next) => {
 });
 
 router.get('/:id', (req, res, next) => {
-  Post.findById(req.params.id).then(post => {
+  Post.findById(req.params.id).then(  post => {
     if (post) {
       res.status(200).json(post);
     } else {
