@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {Subject} from 'rxjs';
 
-import { Post } from './post.model';
+import {Post} from './post.model';
 import {HttpClient} from '@angular/common/http';
 import {map} from 'rxjs/operators';
 
@@ -34,7 +34,7 @@ export class PostsService {
   }
 
   getPost(id: string) {
-    return this.http.get<{_id: string, title: string, content: string}>('http://localhost:3000/api/posts/' + id);
+    return this.http.get<{ _id: string, title: string, content: string }>('http://localhost:3000/api/posts/' + id);
   }
 
   addPost(title: string, content: string, image: File) {
@@ -44,9 +44,14 @@ export class PostsService {
     postData.append('content', content);
     postData.append('image', image, title);
 
-    this.http.post<any>('http://localhost:3000/api/posts', postData)
+    this.http.post<{ message: string, post: Post }>('http://localhost:3000/api/posts', postData)
       .subscribe((responseData) => {
-        const post: Post = {title: responseData.post.title, content: responseData.post.content, id: responseData.post._id};
+        const post: Post = {
+          title: responseData.post.title,
+          content: responseData.post.content,
+          id: responseData.post.id,
+          imagePath: responseData.post.imagePath
+        };
         console.log(responseData.message);
         this.posts.push(post);
         this.postsUpdated.next([...this.posts]);
@@ -54,7 +59,7 @@ export class PostsService {
   }
 
   updatePost(id: string, title: string, content: string) {
-    const post: Post = {id: id, title: title, content: content};
+    const post: Post = {id: id, title: title, content: content, imagePath: null};
     this.http.put<any>('http://localhost:3000/api/posts/' + id, post)
       .subscribe((responseData) => {
         const updatedPost = [...this.posts];
