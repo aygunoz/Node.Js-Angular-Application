@@ -16,6 +16,5 @@ export class SignupComponent {
       return;
     }
     this.authService.createUser(signupForm.value.email, signupForm.value.password);
-    console.log(signupForm.value);
   }
 }
