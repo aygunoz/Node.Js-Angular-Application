@@ -31,6 +31,7 @@ export class PostsService {
       .subscribe(transformedPostData => {
         this.posts = transformedPostData.posts;
         this.postsUpdated.next({
+        // @ts-ignore
           posts: [...this.posts],
           postCount: transformedPostData.maxPosts
         });
