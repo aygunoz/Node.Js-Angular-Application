@@ -7,8 +7,6 @@ import {AppComponent} from './app.component';
 import {HeaderComponent} from './header/header.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {AppRoutingModule} from './app-routing.module';
-import {LoginComponent} from './auth/login/login.component';
-import {SignupComponent} from './auth/signup/signup.component';
 import {AuthInterceptor} from './auth/auth-interceptor';
 import {AngularMaterialModule} from './angular-material.module';
 import {PostsModule} from './posts/posts.module';
@@ -17,17 +15,14 @@ import {PostsModule} from './posts/posts.module';
   declarations: [
     AppComponent,
     HeaderComponent,
-    LoginComponent,
-    SignupComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule,
     BrowserAnimationsModule,
     HttpClientModule,
     AngularMaterialModule,
-    PostsModule
+    PostsModule,
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
